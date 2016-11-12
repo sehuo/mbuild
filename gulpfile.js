@@ -10,14 +10,17 @@ const concat = require('gulp-concat');
 const replace = require('gulp-replace');
 const del = require('del');
 // 具体项目路径
-const pjPath = process.env.PJ_PATH;
+const pwd = process.env.PWD;
 const config = require('./lib/config');
 
 const opts = Object.assign({
-  htmlDir: path.join(pjPath, 'src'),
-  distDir: path.join(pjPath, 'dist'),
+  htmlDir: 'src',
+  distDir: 'dist',
   timestmp: Date.now()
 }, config);
+
+opts.htmlDir = path.join(pwd, opts.htmlDir);
+opts.distDir = path.join(pwd, opts.distDir);
 
 function buildJs(f){
   gulp.src(f, {base: opts.htmlDir})
