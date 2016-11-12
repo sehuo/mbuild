@@ -68,7 +68,7 @@ function buildFile(f){
 }
 
 gulp.task('clean', function(cb) {
-  del([opts.distDir]).then(() => {cb()});
+  del([opts.distDir], {force: true}).then(() => {cb()});
 });
 
 gulp.task('concatScript', function (cb) {
