@@ -5,6 +5,7 @@ const babel = require('gulp-babel');
 const plumber = require('gulp-plumber');
 const runSequence = require('run-sequence');
 const concat = require('gulp-concat');
+const groupConcat = require('gulp-group-concat');
 // const uglify = require('gulp-uglify');
 // const swig = require('gulp-swig');
 const replace = require('gulp-replace');
@@ -16,7 +17,8 @@ const config = require('./lib/config');
 const opts = Object.assign({
   htmlDir: 'src',
   distDir: 'dist',
-  timestmp: Date.now()
+  timestmp: Date.now(),
+  concatGroup: {}
 }, config);
 
 opts.htmlDir = path.join(pwd, opts.htmlDir);
@@ -25,9 +27,7 @@ opts.distDir = path.join(pwd, opts.distDir);
 function buildJs(f){
   gulp.src(f, {base: opts.htmlDir})
     .pipe(plumber())
-    .pipe(babel({
-        presets: ['es2015']
-    }))
+    .pipe(babel(config.babel))
     .pipe(gulp.dest(opts.distDir))
 }
 
@@ -52,7 +52,7 @@ function buildHtml(f){
 }
 
 function buildFile(f){
-  console.log('build:' + f);
+  // console.log('build:' + f);
   const extname = path.extname(f);
   switch(extname){
     case '.html':
@@ -63,7 +63,7 @@ function buildFile(f){
       return buildCss(f);
     default:
       buildOther(f);
-      console.log('build other:' + f);;
+      // console.log('build other:' + f);;
   }
 }
 
@@ -71,18 +71,22 @@ gulp.task('clean', function(cb) {
   del([opts.distDir], {force: true}).then(() => {cb()});
 });
 
-gulp.task('concatScript', function (cb) {
-  return gulp.src([
-      opts.distDir + '/js/lib/zepto-1.2.0.min.js',
-      opts.distDir + '/js/lib/juicer-v0.6.14.js',
-      opts.distDir + '/config.js',
-      opts.distDir + '/www/config.js',
-      opts.distDir + '/js/common.js',
-      opts.distDir + '/js/app.js',
-      opts.distDir + '/js/lib/localforage.min.js'
-    ])
-    .pipe(concat('loads.js'))
-    .pipe(gulp.dest( opts.distDir + '/js'));
+gulp.task('concatGroupScript', function (cb) {
+  if(!opts.concatGroup.js){
+    return cb();
+  }
+  return gulp.src(opts.htmlDir + '/**/*.js')
+    .pipe(groupConcat(opts.concatGroup.js))
+    .pipe(gulp.dest(opts.distDir));
+});
+
+gulp.task('concatGroupCss', function (cb) {
+  if(!opts.concatGroup.css){
+    return cb();
+  }
+  return gulp.src(opts.htmlDir + '/**/*.css')
+    .pipe(groupConcat(opts.concatGroup.css))
+    .pipe(gulp.dest(opts.distDir));
 });
 
 gulp.task('weblogin', function (cb) {
@@ -94,7 +98,8 @@ gulp.task('weblogin', function (cb) {
 
 gulp.task('build', function(callback) {
   runSequence('html',
-              // 'concatScript',
+              'concatGroupScript',
+              'concatGroupCss',
               callback);
 });
 

@@ -1,10 +1,15 @@
-# mbuild
+# mbuild cli
 
-仅针对mui本地项目，解决html文件打包
+for mui build on hbuild
 
-* 支持ES2005
-* 支持更新时间戳
-* 支持include
+## Install
 
-# get start
+```
+npm i mbuild -D
+```
 
+## Usage
+
+## API
+
+## mbuild.config.js
