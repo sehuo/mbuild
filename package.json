@@ -1,6 +1,6 @@
 {
   "name": "mbuild",
-  "version": "0.0.8",
+  "version": "0.1.0",
   "description": "mui cli",
   "main": "index.js",
   "bin": {
@@ -37,5 +37,11 @@
     "gulp-watch": "^4.3.10",
     "rd": "^1.0.0",
     "run-sequence": "^1.2.2"
+  },
+  "scripts": {
+    "lint": "eslint --fix ."
+  },
+  "devDependencies": {
+    "eslint": "^3.10.2"
   }
 }
