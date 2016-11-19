@@ -1,6 +1,6 @@
 {
   "name": "mbuild",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "description": "mui cli",
   "main": "index.js",
   "bin": {
@@ -27,6 +27,7 @@
     "gulp-babel": "^6.1.2",
     "gulp-concat": "^2.6.0",
     "gulp-group-concat": "^1.1.5",
+    "gulp-group-files": "^2.0.0",
     "gulp-plumber": "^1.1.0",
     "gulp-replace": "^0.5.4",
     "gulp-rev": "^7.1.2",

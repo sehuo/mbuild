@@ -5,7 +5,7 @@ const babel = require('gulp-babel');
 const plumber = require('gulp-plumber');
 const runSequence = require('run-sequence');
 const concat = require('gulp-concat');
-const groupConcat = require('gulp-group-concat');
+const group = require('gulp-group-files');
 // const uglify = require('gulp-uglify');
 // const swig = require('gulp-swig');
 const replace = require('gulp-replace');
@@ -71,23 +71,25 @@ gulp.task('clean', function(cb) {
   del([opts.distDir], {force: true}).then(() => {cb()});
 });
 
-gulp.task('concatGroupScript', function (cb) {
-  if(!opts.concatGroup.js){
-    return cb();
-  }
-  return gulp.src(opts.htmlDir + '/**/*.js')
-    .pipe(groupConcat(opts.concatGroup.js))
-    .pipe(gulp.dest(opts.distDir));
-});
+const groupJS = opts.concatGroup.js || [];
+const groupCSS = opts.concatGroup.css || [];
 
-gulp.task('concatGroupCss', function (cb) {
-  if(!opts.concatGroup.css){
-    return cb();
-  }
-  return gulp.src(opts.htmlDir + '/**/*.css')
-    .pipe(groupConcat(opts.concatGroup.css))
-    .pipe(gulp.dest(opts.distDir));
-});
+gulp.task('concatGroupScript', group(groupJS, function(name,files){
+    files.map(function(f, i){
+      files[i] = path.join(opts.htmlDir, f);
+    });
+    return gulp.src(files)
+            .pipe(concat(name))
+            .pipe(gulp.dest(opts.distDir));
+}));
+gulp.task('concatGroupCss', group(groupCSS, function(name,files){
+    files.map(function(f, i){
+      files[i] = path.join(opts.htmlDir, f);
+    });
+    return gulp.src(files)
+            .pipe(concat(name ))
+            .pipe(gulp.dest(opts.distDir));
+}));
 
 gulp.task('weblogin', function (cb) {
   return gulp.src(opts.htmlDir + '/www/login.html')
