@@ -6,49 +6,47 @@ const plumber = require('gulp-plumber');
 const runSequence = require('run-sequence');
 const concat = require('gulp-concat');
 const group = require('gulp-group-files');
-// const uglify = require('gulp-uglify');
-// const swig = require('gulp-swig');
 const replace = require('gulp-replace');
 const del = require('del');
-// 具体项目路径
-const pwd = process.env.PWD;
-const config = require('./lib/config');
+// const uglify = require('gulp-uglify');
+// const swig = require('gulp-swig');
 
-const opts = Object.assign({
-  htmlDir: 'src',
-  distDir: 'dist',
-  timestmp: Date.now(),
-  concatGroup: {}
-}, config);
+const Util = require('./lib/util');
 
-opts.htmlDir = path.join(pwd, opts.htmlDir);
-opts.distDir = path.join(pwd, opts.distDir);
+const srcDir = Util.getConfig('srcDir');
+const destDir = Util.getConfig('destDir');
+
+const concatGroup = Util.getConfig('concatGroup');
+const groupJS = concatGroup.js || [];
+const groupCSS = concatGroup.css || [];
 
 function buildJs(f){
-  gulp.src(f, {base: opts.htmlDir})
+  const babelConfig = Util.getConfig('babel');
+  console.log(babelConfig.ignore);
+  gulp.src(f, {base: srcDir})
     .pipe(plumber())
-    .pipe(babel(config.babel))
-    .pipe(gulp.dest(opts.distDir))
+    .pipe(babel(babelConfig))
+    .pipe(gulp.dest(destDir))
 }
 
 function buildCss(f){
-  gulp.src(f, {base: opts.htmlDir})
+  gulp.src(f, {base: srcDir})
     .pipe(plumber())
-    .pipe(gulp.dest(opts.distDir))
+    .pipe(gulp.dest(destDir))
 }
 
 function buildOther(f){
-  gulp.src(f, {base: opts.htmlDir})
+  gulp.src(f, {base: srcDir})
     .pipe(plumber())
-    .pipe(gulp.dest(opts.distDir))
+    .pipe(gulp.dest(destDir))
 }
 
 function buildHtml(f){
-  gulp.src(f, {base: opts.htmlDir})
+  gulp.src(f, {base: srcDir})
     .pipe(plumber())
-    .pipe(replace(/\.js/g, '.js?' + opts.timestmp))
-    // .pipe(replace(/<!--footer-->[\s\S]*<!--footerend-->/, '<!--footer-->\n' + fs.readFileSync(opts.htmlDir + '_footer.html', 'utf-8') + '\n<!--footerend-->'))
-    .pipe(gulp.dest(opts.distDir))
+    .pipe(replace(/\.js/g, '.js?' + Util.getConfig('timestmp')))
+    // .pipe(replace(/<!--footer-->[\s\S]*<!--footerend-->/, '<!--footer-->\n' + fs.readFileSync(srcDir + '_footer.html', 'utf-8') + '\n<!--footerend-->'))
+    .pipe(gulp.dest(destDir))
 }
 
 function buildFile(f){
@@ -68,35 +66,22 @@ function buildFile(f){
 }
 
 gulp.task('clean', function(cb) {
-  del([opts.distDir], {force: true}).then(() => {cb()});
+  del([destDir], {force: true}).then(() => {cb()});
 });
 
-const groupJS = opts.concatGroup.js || [];
-const groupCSS = opts.concatGroup.css || [];
 
 gulp.task('concatGroupScript', group(groupJS, function(name,files){
-    files.map(function(f, i){
-      files[i] = path.join(opts.htmlDir, f);
-    });
-    return gulp.src(files)
-            .pipe(concat(name))
-            .pipe(gulp.dest(opts.distDir));
+  const nfs = Util.fixDestPath(files);
+  return gulp.src(nfs)
+          .pipe(concat(name))
+          .pipe(gulp.dest(destDir));
 }));
 gulp.task('concatGroupCss', group(groupCSS, function(name,files){
-    files.map(function(f, i){
-      files[i] = path.join(opts.htmlDir, f);
-    });
-    return gulp.src(files)
-            .pipe(concat(name ))
-            .pipe(gulp.dest(opts.distDir));
+  const nfs = Util.fixDestPath(files);
+  return gulp.src(nfs)
+          .pipe(concat(name ))
+          .pipe(gulp.dest(destDir));
 }));
-
-gulp.task('weblogin', function (cb) {
-  return gulp.src(opts.htmlDir + '/www/login.html')
-    .pipe(plumber())
-    .pipe(replace(/\.js/g, '.js?' + opts.timestmp))
-    .pipe(gulp.dest( opts.distDir));
-});
 
 gulp.task('build', function(callback) {
   runSequence('html',
@@ -106,8 +91,8 @@ gulp.task('build', function(callback) {
 });
 
 gulp.task('html', ['clean'], function(callback) {
-  // rd.eachFileFilter(opts.htmlDir, /\.html$/, function (f, s, next) {
-  rd.eachFile(opts.htmlDir, function (f, s, next) {
+  // rd.eachFileFilter(srcDir, /\.html$/, function (f, s, next) {
+  rd.eachFile(srcDir, function (f, s, next) {
     buildFile(f);
     next();
   }, function (err) {
@@ -117,7 +102,7 @@ gulp.task('html', ['clean'], function(callback) {
 });
 
 gulp.task('watch', ['html'] , function () {
-  const watcher = gulp.watch([opts.htmlDir + '/**/*.*'], {} , function(e){
+  const watcher = gulp.watch([srcDir + '/**/*.*'], {} , function(e){
     if(e.type === 'changed'){
       buildFile(e.path);
     }

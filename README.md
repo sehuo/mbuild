@@ -18,8 +18,8 @@ npm i mbuild -D
   ```
   concatGroup: {
       js: {
-        'sub.js': ['**/*.js', '!**/index.js'],
-        'all.js': '**/*.js'
+        'sub.js': ['xx/a.js', 'xx/b.js'],
+        'all.js': ['xx/a.js', 'xx/b.js', 'c.js']
       }
     }
   ```
@@ -28,7 +28,7 @@ npm i mbuild -D
   babel: {
         presets: ['es2015'],
         ignore: [
-            'src/js/mui.min.js'
+            'js/mui.min.js'
         ]
     },
   ```
