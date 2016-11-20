@@ -10,8 +10,6 @@ npm i mbuild -D
 
 ## Usage
 
-## API
-
 ## mbuild.config.js
 
 * `concatGroup` {Object} Concatenate files that match minimatch-styled file globs
@@ -32,3 +30,22 @@ npm i mbuild -D
         ]
     },
   ```
+
+  ## include
+  See https://github.com/coderhaoxin/gulp-file-include
+  ```
+  // header
+  <title>@@data.fb</title>
+
+  // a.html before
+  @@include('./layout/header.html', {
+    "title": "首页",
+    "data": {
+      "fb": "facebook.com/include"
+    }
+  })
+
+  // a.html after
+  <title>facebook.com/include</title>
+  ```
+  

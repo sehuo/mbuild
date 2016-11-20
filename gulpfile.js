@@ -4,6 +4,7 @@ const path = require("path");
 const plumber = require('gulp-plumber');
 const runSequence = require('run-sequence');
 const del = require('del');
+const fileinclude = require('gulp-file-include');
 // const uglify = require('gulp-uglify');
 // const swig = require('gulp-swig');
 
@@ -26,18 +27,34 @@ gulp.task('build', function(callback) {
 
 gulp.task('html', ['clean'], function(callback) {
   rd.eachFile(srcDir, function (f, s, next) {
-    build.files(f);
-    next();
+    build.files(f, next);
   }, function (err) {
     if (err) throw err;
-    setTimeout(callback, 5000);
+    callback();
   });
+});
+
+gulp.task('fileinclude', function(cb) {
+  return gulp.src(destDir + '/**/*.html')
+    .pipe(fileinclude({
+      prefix: '@@',
+      basepath: '@file'
+    }))
+    .pipe(gulp.dest(destDir));
+});
+
+gulp.task('build', function(callback) {
+  runSequence('html',
+              'fileinclude',
+              ['concatGroupScript','concatGroupCss', 'concatGroupOther'],
+              callback);
 });
 
 gulp.task('watch', ['html'] , function () {
   const watcher = gulp.watch([srcDir + '/**/*.*'], {} , function(e){
     if(e.type === 'changed'){
       build.files(e.path);
+      runSequence(['concatGroupScript','concatGroupCss', 'concatGroupOther']);
     }
   });
 
