@@ -37,7 +37,8 @@ gulp.task('html', ['clean'], function(callback) {
 gulp.task('fileinclude', function(cb) {
   return gulp.src(destDir + '/**/*.html')
     .pipe(fileinclude({
-      prefix: '@@',
+      prefix: '{@',
+      suffix: '@}',
       basepath: '@file'
     }))
     .pipe(gulp.dest(destDir));

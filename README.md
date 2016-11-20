@@ -32,18 +32,18 @@ npm i mbuild -D
   ```
 
   ## include
-  See https://github.com/coderhaoxin/gulp-file-include
+  See https://github.com/coderhaoxin/gulp-file-include，prefix、suffix has changed
   ```
   // header
-  <title>@@data.fb</title>
+  <title>{@data.fb@}</title>
 
   // a.html before
-  @@include('./layout/header.html', {
+  {@include('./layout/header.html', {
     "title": "首页",
     "data": {
       "fb": "facebook.com/include"
     }
-  })
+  })@}
 
   // a.html after
   <title>facebook.com/include</title>
