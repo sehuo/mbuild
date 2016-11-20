@@ -10,7 +10,6 @@ const fileinclude = require('gulp-file-include');
 
 const Util = require('./lib/util');
 const build = require('./lib/build');
-require('./lib/group');
 
 const srcDir = Util.getConfig('srcDir');
 const destDir = Util.getConfig('destDir');
@@ -20,9 +19,7 @@ gulp.task('clean', function(cb) {
 });
 
 gulp.task('build', function(callback) {
-  runSequence('html',
-              ['concatGroupScript','concatGroupCss', 'concatGroupOther'],
-              callback);
+  runSequence('html', callback);
 });
 
 gulp.task('html', ['clean'], function(callback) {
@@ -47,7 +44,6 @@ gulp.task('fileinclude', function(cb) {
 gulp.task('build', function(callback) {
   runSequence('html',
               'fileinclude',
-              ['concatGroupScript','concatGroupCss', 'concatGroupOther'],
               callback);
 });
 
@@ -55,7 +51,6 @@ gulp.task('watch', ['html'] , function () {
   const watcher = gulp.watch([srcDir + '/**/*.*'], {} , function(e){
     if(e.type === 'changed'){
       build.files(e.path);
-      runSequence(['concatGroupScript','concatGroupCss', 'concatGroupOther']);
     }
   });
 

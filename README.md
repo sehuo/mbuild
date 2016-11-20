@@ -12,15 +12,6 @@ npm i mbuild -D
 
 ## mbuild.config.js
 
-* `concatGroup` {Object} Concatenate files that match minimatch-styled file globs
-  ```
-  concatGroup: {
-      js: {
-        'sub.js': ['xx/a.js', 'xx/b.js'],
-        'all.js': ['xx/a.js', 'xx/b.js', 'c.js']
-      }
-    }
-  ```
 * `babel` {Object} See the Babel options https://babeljs.io/docs/usage/options/
   ```
   babel: {
