@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 const path = require('path');
 // 移除参数，以免gulp把它当成任务id
 // process.argv.splice(2, 1);
