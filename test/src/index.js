@@ -1,4 +1,5 @@
 const app = require('./common.js');
 const a = 1;
 console.log(a);
-console.log(app)
+console.log(app);
+
