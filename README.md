@@ -21,22 +21,30 @@ npm i mbuild -D
         ]
     },
   ```
-
-  ## include
-  See https://github.com/coderhaoxin/gulp-file-include，prefix、suffix has changed
+* `commonJs` Bundles CommonJS modules for webview
   ```
-  // header
-  <title>{@data.fb@}</title>
-
-  // a.html before
-  {@include('./layout/header.html', {
-    "title": "首页",
-    "data": {
-      "fb": "facebook.com/include"
-    }
-  })@}
-
-  // a.html after
-  <title>facebook.com/include</title>
+  commonJs: {
+    ignore: [
+      'page2/child/sub.js'
+    ],
+  },
   ```
+
+## include
+See https://github.com/coderhaoxin/gulp-file-include，prefix、suffix has changed
+```
+// header
+<title>{@data.fb@}</title>
+
+// a.html before
+{@include('./layout/header.html', {
+  "title": "首页",
+  "data": {
+    "fb": "facebook.com/include"
+  }
+})@}
+
+// a.html after
+<title>facebook.com/include</title>
+```
   
