@@ -2,6 +2,13 @@
 
 for mui build on hbuild
 
+* browser-sync
+* include for html file
+* babel (default support ES2005)
+* commonJs module
+
+> notice: HBuild need base on /dist
+
 ## Install
 
 ```
@@ -10,7 +17,7 @@ npm i mbuild -D
 
 ## Usage
 
-## mbuild.config.js
+### mbuild.config.js
 
 * `babel` {Object} See the Babel options https://babeljs.io/docs/usage/options/
   ```
@@ -30,7 +37,7 @@ npm i mbuild -D
   },
   ```
 
-## include
+### include
 See https://github.com/coderhaoxin/gulp-file-include，prefix、suffix has changed
 ```
 // header
@@ -47,4 +54,3 @@ See https://github.com/coderhaoxin/gulp-file-include，prefix、suffix has chang
 // a.html after
 <title>facebook.com/include</title>
 ```
-  
