@@ -1,5 +1,7 @@
-const app = require('./common.js');
-const a = 1;
-console.log('App start');
-console.log(a);
-console.log(app);
+  const mui = require('mui');
+  const $ = require('jquery');
+  const app = require('./common.js');
+  const a = 1;
+  console.log('App start');
+  console.log(a);
+  console.log(app, mui, $);

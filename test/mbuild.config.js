@@ -5,6 +5,10 @@ module.exports = {
     ],
   },
   commonJs: {
+    external: {
+      mui: 'window.mui',
+      jquery: 'window.jQuery',
+    },
     ignore: [
       'page2/child/sub.js',
     ],

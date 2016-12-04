@@ -1,6 +1,6 @@
 {
   "name": "mbuild",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "build mui project width es2005 and commonjs and pare",
   "main": "index.js",
   "bin": {
@@ -22,6 +22,7 @@
   "dependencies": {
     "babel-preset-es2015": "^6.18.0",
     "browser-sync": "^2.18.2",
+    "cli-color": "^1.1.0",
     "commander": "^2.9.0",
     "del": "^2.2.2",
     "gulp": "^3.9.1",
@@ -32,6 +33,9 @@
     "gulp-replace": "^0.5.4",
     "gulp-watch": "^4.3.11",
     "gulp-webmake": "0.0.41",
+    "istextorbinary": "^2.1.0",
+    "readable-stream": "^2.2.2",
+    "replacestream": "^4.0.2",
     "run-sequence": "^1.2.2"
   },
   "scripts": {
