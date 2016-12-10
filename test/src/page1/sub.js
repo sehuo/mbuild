@@ -1,6 +1,6 @@
-const page1 = 2;
-const nobabel = 1;
-function a() {
-  return nobabel + page1;
+const sub1_a = 2;
+const sub1_b = 1;
+function sub1_fn() {
+  return sub1_b + sub1_a;
 }
-a();
+sub1_fn();

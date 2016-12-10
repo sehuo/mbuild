@@ -13,4 +13,7 @@ module.exports = {
       'page2/child/sub.js',
     ],
   },
+  concat: {
+    'sub.js': ['index.js', 'page1/sub.js']
+  }
 };

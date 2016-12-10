@@ -33,21 +33,33 @@ npm i mbuild -D
 
 * `srcDir` default 'src'
 
+* `concatGroup` {Object} Concatenate files that match minimatch-styled file globs
+
+  ```
+  concat: {
+    'sub.js': ['xx/a.js', 'xx/b.js'],
+    'sub.css': ['xx/a.css', 'xx/b.css'],
+    'all.html': ['xx/a.html', 'xx/b.html', 'c.html']
+  }
+  ```
+
 * `babel` {Object} See the Babel options https://babeljs.io/docs/usage/options/
 
   ```
   babel: {
-        presets: ['es2015'],
-        ignore: [
-            'js/mui.min.js',
-            'js/lib/*.js'
-        ]
-    },
+      enabled: true, // default
+      presets: ['es2015'],
+      ignore: [
+          'js/mui.min.js',
+          'js/lib/*.js'
+      ]
+  },
   ```
 * `commonJs` Bundles CommonJS modules for webview
 
   ```
   commonJs: {
+    enabled: true, // default
     external: {
       mui: 'window.mui',
       jquery: 'window.jQuery',
