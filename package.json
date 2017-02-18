@@ -33,6 +33,7 @@
     "gulp-group-files": "^2.0.0",
     "gulp-plumber": "^1.1.0",
     "gulp-replace": "^0.5.4",
+    "gulp-sftp": "^0.1.5",
     "gulp-watch": "^4.3.11",
     "gulp-webmake": "0.0.41",
     "istextorbinary": "^2.1.0",

@@ -4,6 +4,7 @@ const del = require('del');
 // const swig = require('gulp-swig');
 require('./lib/build');
 require('./lib/watch');
+require('./lib/ftp');
 
 const Util = require('./lib/util');
 const destDir = Util.getConfig('destDir');
