@@ -20,7 +20,7 @@ module.exports = {
     host: 'website.com',
     user: 'johndoe',
     pass: '1234',
-    port: '21',
+    port: '22',
     remotePath: '/',
     remotePlatform: 'unix',
     key: null,

@@ -1,6 +1,6 @@
 {
   "name": "mbuild",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "description": "build mui project width es2005 and commonjs and pare",
   "main": "index.js",
   "bin": {
